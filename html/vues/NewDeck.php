@@ -42,20 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     nom: <input type="text" name="newname"><br>
     description: <input type="text" name="newdescription"><br>
     background picture: <input type="text" name="newbg_picture"><br>
-    Card:
-    
-    <select name="type_card">
-    <?php
-    $typeCards = $api->getTypeCard();
-    
-    foreach ($typeCards as $typeCard) {
-        $type = $typeCard['type'];
-        
-        echo '<option value="' . $type . '">' . $type . '</option>';
-    }
-    ?>
-    </select>
-
+    Cards :
     <select name="newcard">
         <?php 
         $Cards = getCard();
@@ -66,6 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </select><br>
     <input type="submit" value="Ajouter un deck">
 </form>
-<button onclick="window.location.href='./NewCard.php';"> ajouter une carte </button>
+<button onclick="window.location.href='./NewCard.php';"> nouvelle une carte </button>
 </body>
 </html>

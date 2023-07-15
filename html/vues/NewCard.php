@@ -10,7 +10,7 @@
 require_once __DIR__.'/../layout/navbar.php';
 require_once __DIR__.'/../ApiSql/Cards.php';
 require_once __DIR__.'/../database/database.php';
-$api = new ApiSql();
+
 $selectedType = isset($_POST['newtype_card']) ? $_POST['newtype_card'] : '';
 $message = "";
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         
         if (!empty($name) && !empty($picture) && !empty($description) && !empty($type_card)) {
-            $success = createCard($life_points, $picture, $description, $type_card, $life_points, $attack, $power, $activation);
+            $success = createCard($name, $picture, $description, $type_card, $life_points, $attack, $power, $activation);
             if ($success) {
                 $message = "La carte a été ajouté a la liste des cartes disponibles";
             } else {
@@ -52,51 +52,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <select name="newtype_card">
     <?php
-    $typeCards = $api->getTypeCard();
+    $typeCards = getTypeCard();
+    var_dump($typecards);
     
     foreach ($typeCards as $typeCard) {
         $type = $typeCard['type'];
-        
-        //echo '<option value="' . $type . '">' . $type . '</option>';
-        echo '<option value="' . $type . '"' . ($type === $selectedType ? 'selected' : '') . '>' . $type . '</option>';
-    }
-    ?></select><?php
-
-    $selectedType = isset($_POST['newtype_card']) ? $_POST['newtype_card'] : '';
-
-
-    echo "<br>".$selectedType."|".$seltype;
+        echo '<option value="' . $type . '">' . $type . '</option>';
+        ?>
+    <?php }
+    ?></select><br><?php
 
 
 
-    switch ($selectedType) {
-        case 'attack':
-            ?>
-            Attack: <input type="text" name="newattack"><br>
+    //echo "<br>".$selectedType."|".$type_card;?>
+
+
+<br> pour les cartes types 'attaque' remplissez uniquement les champs suivant.<br>
             Power: <input type="text" name="newpower"><br>
-            <?php
-            break;
-        case 'mob':
-            ?>
-            HP: <input type="text" name="newlife_points"><br>
-            Defense: <input type="text" name="newdefense"><br>
-            Speed: <input type="text" name="newspeed"><br>
-            <?php
-            break;
-        case 'spell':
-            ?>
+            <br>pour les cartes types 'mob' remplissez uniquement les champs suivant.<br>
+            HP: <input type="number" name="newlife_points"><br>
+
+
+            Attack: <select name="newattack"><?php
+            $attacks = getattack();
+            var_dump($attacks);
+            foreach ($attacks as $attack){
+                echo $attack;
+                echo '<option value="' . $attack . '">' . $attack . '</option>';
+            }
+            ?></select><br>
+
+
+            <br>pour les cartes types 'spell' remplissez uniquement les champs suivant.<br>
             Power: <input type="text" name="newpower"><br>
             Activation: <input type="text" name="newactivation"><br>
-            <?php
-            break;
-        default:
-            // Aucun champ supplémentaire n'est affiché par défaut
-            break;
-    }
-    ?>
+
     <br>
     <input type="submit" value="Ajouter une carte">
 </form>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['selectTypeCard'])) {
+
+
+    }
+}
+?>
 <button onclick="window.location.href='./NewDeck.php';"> retourner au deck </button>
 </body>
 </html>
