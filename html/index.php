@@ -4,8 +4,10 @@
     <title>Gestion des decks</title>
 </head>
 <body>
-
-<?php
-
+<?php 
+require_once './layout/header.php';
 ?>
-<a href="/vues/NewDeck.php">Gérer mon profil</a>
+
+<h1><?php echo "Bienvenue sur TCG Builder"; ?></h1>
+
+<?php require_once './layout/footer.php';?>
